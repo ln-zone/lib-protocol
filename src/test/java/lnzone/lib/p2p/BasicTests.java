@@ -1,4 +1,4 @@
-package bittech.lib.protocol;
+package lnzone.lib.p2p;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -16,7 +16,6 @@ import bittech.lib.protocol.ErrorResponse;
 import bittech.lib.protocol.Message;
 import bittech.lib.protocol.Node;
 import bittech.lib.protocol.Request;
-import bittech.lib.protocol.commands.PingCommand;
 import bittech.lib.utils.Config;
 import bittech.lib.utils.Crypto;
 import bittech.lib.utils.Require;
@@ -26,6 +25,7 @@ import bittech.lib.utils.json.RawJson;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import lnzone.lib.p2p.commands.PingCommand;
 
 public class BasicTests extends TestCase {
 

@@ -1,4 +1,4 @@
-package bittech.lib.protocol;
+package lnzone.lib.p2p;
 
 public class User {
 

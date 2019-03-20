@@ -1,4 +1,4 @@
-package bittech.lib.protocol;
+package lnzone.lib.p2p;
 
 import org.junit.Assert;
 import org.slf4j.Logger;

@@ -1,17 +1,17 @@
-package bittech.lib.protocol;
+package lnzone.lib.p2p;
 
 import org.junit.Assert;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import bittech.lib.protocol.Node;
-import bittech.lib.protocol.commands.PingCommand;
 import bittech.lib.utils.Config;
 import bittech.lib.utils.Crypto;
 import bittech.lib.utils.json.RawJson;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import lnzone.lib.p2p.commands.PingCommand;
 
 public class ReconnectTests extends TestCase {
 

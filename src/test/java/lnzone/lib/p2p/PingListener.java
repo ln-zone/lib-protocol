@@ -1,10 +1,10 @@
-package bittech.lib.protocol;
+package lnzone.lib.p2p;
 
 import bittech.lib.protocol.Command;
 import bittech.lib.protocol.ErrorResponse;
 import bittech.lib.protocol.Listener;
-import bittech.lib.protocol.commands.PingCommand;
-import bittech.lib.protocol.commands.PingResponse;
+import lnzone.lib.p2p.commands.PingCommand;
+import lnzone.lib.p2p.commands.PingResponse;
 
 public class PingListener implements Listener {
 

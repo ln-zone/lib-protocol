@@ -1,4 +1,4 @@
-package bittech.lib.protocol;
+package lnzone.lib.p2p;
 
 import java.util.LinkedList;
 import java.util.List;

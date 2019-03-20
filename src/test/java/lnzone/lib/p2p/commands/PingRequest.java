@@ -1,4 +1,4 @@
-package bittech.lib.protocol.commands;
+package lnzone.lib.p2p.commands;
 
 import bittech.lib.protocol.Request;
 
