@@ -68,11 +68,14 @@ public class ConnectionsManager implements Listener, ConnectionListener {
 								"Introduce authentication failes. Wrong public key used to encrypt message");
 					}
 				} catch (Exception ex) {
-					ex.printStackTrace(); // TODO: Remove
 					throw new Exception("Authentication failed. Cannot decrypt message: '"
 							+ cmd.getRequest().peerPubEncryptedName + " using my private key", ex);
 				}
 
+				replaceConnectionName(peerName, cmd.request.serviceName);
+				IConnection connection = connections.get(cmd.request.serviceName);
+				connection.setAuthenticated();
+				
 				cmd.response = new IntroduceResponse(true, nodeName);
 			} else if (command instanceof DisconnectCommand) {
 				LOGGER.info("Disconnect command received from " + peerName + ". Command: " + command);
@@ -85,6 +88,16 @@ public class ConnectionsManager implements Listener, ConnectionListener {
 		} catch (Throwable th) {
 			throw new RuntimeException(
 					"Cannot response to command received: " + command + " for peer name: " + peerName, th);
+		}
+	}
+	
+	@Override
+	public void responseSent(String peerName, Command<?, ?> command) {
+		if (command instanceof IntroduceCommand) {
+			IntroduceCommand cmd = (IntroduceCommand) command;
+			if (cmd.getError() == null && cmd.getResponse() != null) {
+				listenersManager.onConnected(cmd.request.serviceName);
+			}
 		}
 	}
 
@@ -157,12 +170,6 @@ public class ConnectionsManager implements Listener, ConnectionListener {
 	}
 
 	@Override
-	public void onConnected(String peerName) {
-		IConnection connection = connections.get(peerName);
-		connection.setAuthenticated();
-	}
-
-	@Override
 	public void onDisconnected(String peerName) throws StoredException {
 		LOGGER.debug("ConnectionsManager.onDisconnected");
 		try {
@@ -183,15 +190,8 @@ public class ConnectionsManager implements Listener, ConnectionListener {
 	}
 
 	@Override
-	public void responseSent(String peerName, Command<?, ?> command) {
-		if (command instanceof IntroduceCommand) {
-			IntroduceCommand cmd = (IntroduceCommand) command;
-			if (cmd.getError() == null && cmd.getResponse() != null) {
-				replaceConnectionName(peerName, cmd.request.serviceName);
-				listenersManager.onConnected(cmd.request.serviceName);
-			}
-		}
-
+	public void onConnected(String peerName) {
+		// Nothing to do
 	}
 
 }
