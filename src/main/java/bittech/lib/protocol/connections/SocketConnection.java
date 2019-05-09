@@ -388,7 +388,7 @@ public class SocketConnection implements AutoCloseable, IConnection {
 					return;
 				}
 			} catch (Exception ex) {
-				ErrorResponse err = new ErrorResponse(0, "Unrecognized error: " + ex.getMessage());
+				ErrorResponse err = new ErrorResponse(ex);
 
 				sendObject(new Message(message.id, "command.getClass().getCanonicalName()", err));
 			}
