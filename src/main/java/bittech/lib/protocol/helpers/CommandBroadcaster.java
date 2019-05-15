@@ -51,15 +51,15 @@ public class CommandBroadcaster {
 			throw new StoredException("Cannot save services to file: " + fileName, ex);
 		}
 	}
-	
+
 	private synchronized void load() {
 		try {
 			Require.notEmpty(fileName, "fileName");
 			File file = new File(fileName);
-			if(file.exists() == false) {
+			if (file.exists() == false) {
 				return;
 			}
-			
+
 			Gson json = JsonBuilder.build();
 			try (FileReader fileReader = new FileReader(file)) {
 				services = json.fromJson(fileReader, Services.class);
@@ -72,9 +72,13 @@ public class CommandBroadcaster {
 	public synchronized List<Command<?, ?>> broadcast(Command<?, ?> command) {
 		List<Command<?, ?>> commands = new ArrayList<Command<?, ?>>(services.services.size());
 		for (String connectionName : services.services) {
-			Command<?, ?> cpyCommand = Utils.deepCopy(command, command.getClass());
-			commands.add(cpyCommand);
-			node.execute(connectionName, cpyCommand);
+			try {
+				Command<?, ?> cpyCommand = Utils.deepCopy(command, command.getClass());
+				commands.add(cpyCommand);
+				node.execute(connectionName, cpyCommand);
+			} catch (Exception ex) {
+				new StoredException("Cannot broadcast command " + command.type + " to " + connectionName, ex);
+			}
 		}
 		return commands;
 	}
