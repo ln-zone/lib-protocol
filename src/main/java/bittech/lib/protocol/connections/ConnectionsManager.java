@@ -1,5 +1,7 @@
 package bittech.lib.protocol.connections;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -192,6 +194,14 @@ public class ConnectionsManager implements Listener, ConnectionListener {
 	@Override
 	public void onConnected(String peerName) {
 		// Nothing to do
+	}
+	
+	public synchronized List<String> listConnectionNames() {
+		List<String> ret = new ArrayList<String>(connections.keySet().size());
+		for(String connectionName : connections.keySet()) {
+			ret.add(connectionName);
+		}
+		return ret;
 	}
 
 }

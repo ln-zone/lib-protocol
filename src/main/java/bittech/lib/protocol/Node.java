@@ -2,6 +2,7 @@ package bittech.lib.protocol;
 
 import java.net.InetSocketAddress;
 import java.net.Socket;
+import java.util.List;
 import java.util.Set;
 
 import org.slf4j.Logger;
@@ -266,6 +267,10 @@ public class Node implements AutoCloseable {
 		} catch (Throwable th) {
 			throw new StoredException("Cannot disconnect peer " + peerName, th);
 		}
+	}
+	
+	public List<String> listConnectionNames() {
+		return peersConnectionsManager.listConnectionNames();
 	}
 
 }
