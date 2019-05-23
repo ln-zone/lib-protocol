@@ -35,8 +35,20 @@ public class ErrorResponse {
 			if(r.message != null && r.message.contains(message)) {
 				return true;
 			}
+			r = r.cause;
 		}
 		return false;
+	}
+	
+	public ErrorResponse findWithMessage(String message) {
+		ErrorResponse r = this;
+		while(r != null) {
+			if(r.message != null && r.message.contains(message)) {
+				return r;
+			}
+			r = r.cause;
+		}
+		return null;
 	}
 
 	public ErrorResponse(long errorCode, String message, long exceptionId) {
