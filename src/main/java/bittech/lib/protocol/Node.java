@@ -239,6 +239,13 @@ public class Node implements AutoCloseable {
 		}
 	}
 	
+	public void executeWithException(String connectionName, Command<?, ?> command) throws StoredException {
+		execute(connectionName, command);
+		if(command.getError() != null) {
+			throw new StoredException("Command " + command.type + " returned error.", command.getError().toException());
+		}
+	}
+	
 //	public void executeJson(String connectionName, String request) throws StoredException {
 //		try {
 //			Require.notNull(connectionName, "connectionName");
