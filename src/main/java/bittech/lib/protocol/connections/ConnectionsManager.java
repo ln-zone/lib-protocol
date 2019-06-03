@@ -82,7 +82,7 @@ public class ConnectionsManager implements Listener, ConnectionListener {
 			} else if (command instanceof DisconnectCommand) {
 				LOGGER.info("Disconnect command received from " + peerName + ". Command: " + command);
 				DisconnectCommand cmd = (DisconnectCommand) command;
-				onDisconnected(peerName);
+//				onDisconnected(peerName);
 				cmd.response = new DisconnectResponse(true);
 			} else {
 				throw new RuntimeException("Unsupported command: " + command);
@@ -100,6 +100,8 @@ public class ConnectionsManager implements Listener, ConnectionListener {
 			if (cmd.getError() == null && cmd.getResponse() != null) {
 				listenersManager.onConnected(cmd.request.serviceName);
 			}
+		} else if (command instanceof DisconnectCommand) {
+			onDisconnected(peerName);
 		}
 	}
 
@@ -164,7 +166,9 @@ public class ConnectionsManager implements Listener, ConnectionListener {
 
 	public void closeAllConnections() throws StoredException {
 		// synchronized (connections) {
+		System.out.println("Connections to close: " + connections.size());
 		for (IConnection connection : connections.values()) {
+			System.out.println("Closing connection: " + connection.getPeerName());
 			connection.close();
 			// }
 		}

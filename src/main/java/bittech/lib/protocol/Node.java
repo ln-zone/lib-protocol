@@ -212,12 +212,11 @@ public class Node implements AutoCloseable {
 	public void close() throws StoredException {
 		toReconnect.removeAll();
 		try {
+			peersConnectionsManager.closeAllConnections();
 			if (this.socketConnectionServer != null) {
 				this.socketConnectionServer.close();
 				LOGGER.info(myName + " -> Listening socket closed");
 			}
-
-			peersConnectionsManager.closeAllConnections();
 		} catch (Throwable th) {
 			throw new StoredException("Node didn't closed properly: ", th);
 		}
