@@ -82,5 +82,9 @@ public class CommandBroadcaster {
 		}
 		return commands;
 	}
+	
+	public synchronized String toString() {
+		return JsonBuilder.build().toJson(services);
+	}
 
 }
