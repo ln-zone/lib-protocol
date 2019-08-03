@@ -29,6 +29,16 @@ public class Message {
 	}
 
 	// Used by webNode only
+	public Message(long id, String command, Request request) { 
+		Require.notNull(request, "request");
+		this.name = command;
+		this.type = "request";
+		this.timeout = 0;
+		this.id = id;
+		this.body = new RawJson(request);
+	}
+	
+	// Used by webNode only
 	public Message(long id, String command, Response response) { 
 		Require.notNull(response, "response");
 		this.name = command;
