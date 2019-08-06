@@ -10,6 +10,7 @@ public class Message {
 	public long id;
 	public String name;
 	public String type; // request, response, error
+	public String authKey;
 	public long timeout; // timeout in millisec
 	public RawJson body;
 

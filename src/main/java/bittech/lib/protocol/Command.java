@@ -16,6 +16,8 @@ public abstract class Command<T extends Request, E extends Response> {
 
 	public ErrorResponse error = null;
 
+	private String authKey = null;
+	
 	protected long timeout = 200000;
 
 	@SuppressWarnings("unchecked")
@@ -57,7 +59,14 @@ public abstract class Command<T extends Request, E extends Response> {
 	public void setTimeout(long timeout) {
 		this.timeout = timeout;
 	}
+	
+	public void setAuthKey(String authKey) {
+		this.authKey = authKey;
+	}
 
+	public String getAuthKey() {
+		return authKey;
+	}
 	// public abstract Class<?> getResponseClass();
 
 }
