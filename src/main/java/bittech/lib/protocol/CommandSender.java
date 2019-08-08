@@ -2,6 +2,6 @@ package bittech.lib.protocol;
 
 public interface CommandSender {
 	
-	public void send(Command<?,?> command);
+	public void send(String receiverId, Command<?,?> command);
 
 }
