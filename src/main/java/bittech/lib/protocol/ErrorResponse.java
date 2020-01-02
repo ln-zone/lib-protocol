@@ -40,6 +40,14 @@ public class ErrorResponse {
 		return false;
 	}
 	
+	public ErrorResponse getCause(int deep) {
+		ErrorResponse cause = this;
+		for(int i = 0; i< deep; i++) {
+			cause = cause.cause;
+		}
+		return cause;
+	}
+	
 	public ErrorResponse findWithMessage(String message) {
 		ErrorResponse r = this;
 		while(r != null) {
