@@ -93,7 +93,11 @@ public class JsonCommandExec {
 		}
 	}
 
+//	public static int idStatic = 0;
+
 	public String prepareToSend(String authKey, Command<?, ?> command) {
+//		idStatic++;
+//		long id = idStatic;
 		long id = (long) (Math.random() * Long.MAX_VALUE);
 		Message message = new Message(id, command.getClass().getCanonicalName(), command.request);
 		message.authKey = authKey;
