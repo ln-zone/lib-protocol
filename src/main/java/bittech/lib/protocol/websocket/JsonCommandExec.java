@@ -157,7 +157,7 @@ public class JsonCommandExec {
 						listenersManager.commandReceived(channelId, command);
 
 					} catch (Exception e) {
-						StoredException sex = new StoredException("Cannot process command", e);
+						StoredException sex = new StoredException("Cannot process command '" + message.name + "'", e);
 						command.response = null;
 						command.error = new ErrorResponse(sex);
 					}
