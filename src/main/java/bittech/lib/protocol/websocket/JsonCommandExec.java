@@ -158,7 +158,7 @@ public class JsonCommandExec {
 
 					} catch (Exception e) {
 						StoredException sex = new StoredException(
-								"Cannot process command '" + message == null ? null : message.name + "'", e);
+								"Cannot process command '" + (message == null ? null : message.name) + "'", e);
 						command.response = null;
 						command.error = new ErrorResponse(sex);
 					}
