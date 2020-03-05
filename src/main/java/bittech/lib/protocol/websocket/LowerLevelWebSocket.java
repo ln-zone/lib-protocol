@@ -11,6 +11,7 @@ import bittech.lib.utils.exceptions.StoredException;
 
 public class LowerLevelWebSocket extends WebSocketClient {
 
+	private Exception lastException = null;
 	private final Object connected = new Object();
 	private final JsonCommandExec exec;
 
@@ -21,6 +22,9 @@ public class LowerLevelWebSocket extends WebSocketClient {
 			connect();
 			synchronized (connected) {
 				connected.wait();
+				if (lastException != null) {
+					throw new Exception("Failed to connect to '" + serverURI + "'", lastException);
+				}
 			}
 		} catch (Exception ex) {
 			throw new StoredException("Cannot create WebSocket connector", ex);
@@ -51,7 +55,10 @@ public class LowerLevelWebSocket extends WebSocketClient {
 
 	@Override
 	public void onError(Exception ex) {
-		new StoredException("Web socket error", ex);
+		synchronized (connected) {
+			lastException = new StoredException("Web socket error", ex);
+			connected.notify();
+		}
 	}
 
 	public void send(String authKey, Command<?, ?> command) {

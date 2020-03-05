@@ -11,7 +11,7 @@ import bittech.lib.utils.exceptions.StoredException;
 import bittech.lib.utils.storage.Storage;
 import io.undertow.websockets.core.WebSocketChannel;
 
-public class ApiModule {
+public class WebSocketServer {
 
 	private final ListenersManager listenersManager = new ListenersManager();
 	private final JsonCommandExec jsonCommandExec;
@@ -20,7 +20,7 @@ public class ApiModule {
 
 	final ExecutorService exService = Executors.newSingleThreadExecutor();
 
-	public ApiModule(Storage storage) {
+	public WebSocketServer(Storage storage) {
 
 		listenersManager.registerListener(authenticationModule);
 		jsonCommandExec = new JsonCommandExec(listenersManager);
