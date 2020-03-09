@@ -187,7 +187,7 @@ public class JsonCommandExec {
 
 			if (command.response == null && command.error == null) {
 
-				command.error = new ErrorResponse(new StoredException("Cannot process command",
+				command.error = new ErrorResponse(new StoredException("Cannot process command " + command.type,
 						new Exception("Listener didn't added response or error to command")));
 			}
 
