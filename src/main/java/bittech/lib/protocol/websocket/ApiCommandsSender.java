@@ -49,6 +49,8 @@ public class ApiCommandsSender implements CommandSender {
 	}
 
 	public synchronized void addClient(String id, List<String> patterns) {
+		Require.notEmpty(id, "id");
+		Require.notNull(patterns, "patterns");
 		apiClients.put(id, patterns);
 	}
 
