@@ -1,9 +1,9 @@
 package bittech.lib.protocol.websocket;
 
 import java.util.HashMap;
-import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
-import java.util.Set;
+import java.util.Map.Entry;
 
 import bittech.lib.protocol.Command;
 import bittech.lib.protocol.CommandSender;
@@ -17,8 +17,8 @@ public class ApiCommandsSender implements CommandSender {
 	private final Map<String, WebSocketChannel> channelsById = new HashMap<String, WebSocketChannel>();
 	private final Map<WebSocketChannel, String> channelsBySocket = new HashMap<WebSocketChannel, String>();
 
-	private final Set<String> apiClients = new HashSet<String>();;
-	
+	private final Map<String, List<String>> apiClients = new HashMap<String, List<String>>();
+
 	@Override
 	public synchronized void send(String apiClient, Command<?, ?> command) {
 		WebSocketChannel channel = channelsById.get(apiClient);
@@ -48,14 +48,27 @@ public class ApiCommandsSender implements CommandSender {
 		return Require.notNull(channelsBySocket.get(channel), "channel ID");
 	}
 
-	public synchronized void addClient(String id) {
-		apiClients.add(id);
+	public synchronized void addClient(String id, List<String> patterns) {
+		apiClients.put(id, patterns);
 	}
 
 	public synchronized void sendToClients(Command<?, ?> cmd) {
-		for (String apiClient : apiClients) {
-			send(apiClient, cmd);
+		for (Entry<String, List<String>> entry : apiClients.entrySet()) {
+			String apiClient = entry.getKey();
+			List<String> patterns = entry.getValue();
+			if (matches(cmd.type, patterns)) {
+				send(apiClient, cmd);
+			}
 		}
+	}
+
+	private static boolean matches(final String commandType, final List<String> patterns) {
+		for (String pattern : patterns) {
+			if (commandType.startsWith(pattern)) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 }
