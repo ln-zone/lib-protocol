@@ -1,6 +1,7 @@
 package bittech.lib.protocol.websocket;
 
 import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 import java.util.Date;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -138,7 +139,12 @@ public class JsonCommandExec {
 
 				return respError(message.id, message.name, new ErrorResponse(sex.getId(), sex.getMessage()));
 			}
-
+			
+	        if (!Modifier.isStatic(method.getModifiers())) {
+				StoredException sex = new StoredException("Internal command error. Method createStub in command " + message.name + " is not static", null);
+				return respError(message.id, message.name, new ErrorResponse(sex.getId(), sex.getMessage()));
+	        }
+			
 			@SuppressWarnings("unchecked")
 			Command<Request, Response> command = (Command<Request, Response>) method.invoke(null);
 			command.setTimeout(message.timeout);
