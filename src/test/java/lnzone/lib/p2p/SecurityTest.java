@@ -13,9 +13,9 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
-public class SecurityTests extends TestCase {
+public class SecurityTest extends TestCase {
 
-	public SecurityTests(String testName) {
+	public SecurityTest(String testName) {
 		super(testName);
 	}
 
@@ -23,7 +23,7 @@ public class SecurityTests extends TestCase {
 	 * @return the suite of tests being tested
 	 */
 	public static Test suite() {
-		return new TestSuite(SecurityTests.class);
+		return new TestSuite(SecurityTest.class);
 	}
 
 	public void testWrongKey() throws Exception {

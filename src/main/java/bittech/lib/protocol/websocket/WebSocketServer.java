@@ -72,4 +72,8 @@ public class WebSocketServer {
 		return authenticationModule;
 	}
 
+	public void setAuthenticator(final Authenticator authenticator) {
+		authenticationModule.setAuthenticator(authenticator);
+	}
+	
 }

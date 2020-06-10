@@ -32,25 +32,22 @@ public class AuthenticationModule implements Listener {
 		User user;
 	}
 
+	private Authenticator authenticator;
+
 	private Map<String, AuthToken> authTokens = new HashMap<String, AuthToken>();
 
-	private Map<String, User> users = new HashMap<String, User>();
-
 	public AuthenticationModule() {
-		users.put("Watcher", new User("Watcher", "6f720991fceb1250aadf2aeb55e62f69f77573875661c5ad6f173a2184ee53b2"));
-		users.put("Cezary", new User("Cezary", "dd423f27dce8ae5e8300bd4cd479c62570953578dd968a7634a532ee400aec50"));
-		users.put("Krystian", new User("Krystian", "dd423f27dce8ae5e8300bd4cd479c62570953578dd968a7634a532ee400aec50"));
+		this.authenticator = new DefaultAuthenticator();
+	}
+		
+	public synchronized void setAuthenticator(final Authenticator authenticator) {
+		this.authenticator = Require.notNull(authenticator, "authenticator");
 	}
 
 	public synchronized String authenticate(final String name, final String pwdSha256) {
 		try {
-			User user = users.get(name);
-			if (user == null) {
-				throw new Exception("No user with such name: " + name);
-			}
-			if (!user.pwdSha256.equals(pwdSha256)) {
-				throw new Exception("Wrong password for user: " + name);
-			}
+
+			User user = authenticator.authenticate(name, pwdSha256);
 
 			AuthToken authToken = new AuthToken();
 			authToken.lastUsage = new Date().getTime();

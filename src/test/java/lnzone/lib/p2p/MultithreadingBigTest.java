@@ -16,9 +16,9 @@ import junit.framework.TestCase;
 import junit.framework.TestSuite;
 import lnzone.lib.p2p.commands.PingCommand;
 
-public class MultithreadingTestBig extends TestCase {
+public class MultithreadingBigTest extends TestCase {
 
-	public MultithreadingTestBig(String testName) {
+	public MultithreadingBigTest(String testName) {
 		super(testName);
 		Config.loadEmptyConfig();
 		Config.getInstance().addEntry("connectionKeys", new RawJson(Crypto.generateKeys()));
@@ -28,7 +28,7 @@ public class MultithreadingTestBig extends TestCase {
 	 * @return the suite of tests being tested
 	 */
 	public static Test suite() {
-		return new TestSuite(MultithreadingTestBig.class);
+		return new TestSuite(MultithreadingBigTest.class);
 	}
 
 	private class WorkerThread extends Thread {

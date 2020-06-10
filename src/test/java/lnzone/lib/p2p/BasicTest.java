@@ -27,9 +27,9 @@ import junit.framework.TestCase;
 import junit.framework.TestSuite;
 import lnzone.lib.p2p.commands.PingCommand;
 
-public class BasicTests extends TestCase {
+public class BasicTest extends TestCase {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(BasicTests.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(BasicTest.class);
 
 	private final class ListenedInfo {
 		public String clientListened;
@@ -38,7 +38,7 @@ public class BasicTests extends TestCase {
 		public String serverDisconnected;
 	}
 
-	public BasicTests(String testName) {
+	public BasicTest(String testName) {
 		super(testName);
 		Config.loadEmptyConfig();
 		Config.getInstance().addEntry("connectionKeys", new RawJson(Crypto.generateKeys()));
@@ -48,7 +48,7 @@ public class BasicTests extends TestCase {
 	 * @return the suite of tests being tested
 	 */
 	public static Test suite() {
-		return new TestSuite(BasicTests.class);
+		return new TestSuite(BasicTest.class);
 	}
 
 	public void testConnection() throws Exception {
